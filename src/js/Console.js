@@ -1,9 +1,10 @@
-import {BackspaceOutput, CharOutput, JoyFlick} from "./JoyFlick.js";
+import {BackspaceOutput, CharOutput, JoyFlick, TransformOutput} from "./JoyFlick.js";
+import {PhoneticElement} from "./PhoneticElements.js";
 
 class Console extends HTMLElement {
     static instance;
     joyflick = null;
-    textbox = null;
+    textBox = null;
 
     constructor() {
         super();
@@ -17,8 +18,8 @@ class Console extends HTMLElement {
         this.joyflick = new JoyFlick(gamepad);
         this.appendChild(this.joyflick);
 
-        this.textbox = new TextBox();
-        this.appendChild(this.textbox);
+        this.textBox = new TextBox();
+        this.appendChild(this.textBox);
     }
 
     static scanGamepads() {
@@ -37,11 +38,15 @@ class Console extends HTMLElement {
             outputs.forEach((output) => {
                 switch (output.constructor) {
                     case CharOutput: {
-                        Console.instance.textbox.input(output.getChar());
+                        Console.instance.textBox.input(output.getChar());
                         break;
                     }
                     case BackspaceOutput: {
-                        Console.instance.textbox.backspace();
+                        Console.instance.textBox.backspace();
+                        break;
+                    }
+                    case TransformOutput: {
+                        Console.instance.textBox.transform();
                         break;
                     }
                     default: {
@@ -94,7 +99,18 @@ class TextBox extends HTMLTextAreaElement {
 
     backspace() {
         const text = this.value;
-        this.value = text.slice(0,this.selectionEnd -1) + text.slice(this.selectionEnd);
+        this.value = text.slice(0, this.selectionEnd - 1) + text.slice(this.selectionEnd);
+    }
+
+    transform() {
+        const text = this.value;
+        const char = text.charAt(this.selectionEnd - 1);
+        const newChar = PhoneticElement.transform(char);
+        if (newChar != null) {
+            this.value = text.slice(0, this.selectionEnd - 1) + newChar + text.slice(this.selectionEnd);
+        } else {
+            // そのまま
+        }
     }
 }
 
