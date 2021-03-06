@@ -1,4 +1,4 @@
-import {CharOutput, JoyFlick} from "./JoyFlick.js";
+import {BackspaceOutput, CharOutput, JoyFlick} from "./JoyFlick.js";
 
 class Console extends HTMLElement {
     static instance;
@@ -37,7 +37,11 @@ class Console extends HTMLElement {
             outputs.forEach((output) => {
                 switch (output.constructor) {
                     case CharOutput: {
-                        Console.instance.textbox.input(output.getChar())
+                        Console.instance.textbox.input(output.getChar());
+                        break;
+                    }
+                    case BackspaceOutput: {
+                        Console.instance.textbox.backspace();
                         break;
                     }
                     default: {
@@ -89,7 +93,8 @@ class TextBox extends HTMLTextAreaElement {
     }
 
     backspace() {
-
+        const text = this.value;
+        this.value = text.slice(0,this.selectionEnd -1) + text.slice(this.selectionEnd);
     }
 }
 
