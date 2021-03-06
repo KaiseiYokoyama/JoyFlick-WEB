@@ -1,8 +1,9 @@
-import {JoyFlick} from "./JoyFlick.js";
+import {CharOutput, JoyFlick} from "./JoyFlick.js";
 
 class Console extends HTMLElement {
     static instance;
     joyflick = null;
+    textbox = null;
 
     constructor() {
         super();
@@ -15,6 +16,9 @@ class Console extends HTMLElement {
 
         this.joyflick = new JoyFlick(gamepad);
         this.appendChild(this.joyflick);
+
+        this.textbox = new TextBox();
+        this.appendChild(this.textbox);
     }
 
     static scanGamepads() {
@@ -31,7 +35,15 @@ class Console extends HTMLElement {
             let outputs = joyflick.update(gamepad);
             if (outputs == null) continue;
             outputs.forEach((output) => {
-                console.log(output);
+                switch (output.constructor) {
+                    case CharOutput: {
+                        Console.instance.textbox.input(output.getChar())
+                        break;
+                    }
+                    default: {
+                        console.log(output);
+                    }
+                }
             });
         }
     }
@@ -46,7 +58,7 @@ window.addEventListener('gamepadconnected', (e) => {
     Console.instance.initialize(e.gamepad);
     // if (Console.instance.joyflick == null) {
     // } else {
-        // 無視
+    // 無視
     // }
 });
 
@@ -62,3 +74,23 @@ window.addEventListener('gamepaddisconnected', (e) => {
 });
 
 setInterval(Console.scanGamepads, 60);
+
+class TextBox extends HTMLTextAreaElement {
+    constructor() {
+        super();
+    }
+
+    connectedCallback() {
+        this.focus();
+    }
+
+    input(char) {
+        this.value = this.value + char;
+    }
+
+    backspace() {
+
+    }
+}
+
+customElements.define('app-textbox', TextBox, {extends: 'textarea'})
