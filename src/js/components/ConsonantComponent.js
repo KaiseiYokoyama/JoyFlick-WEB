@@ -3,6 +3,9 @@ import {Consonant} from "../PhoneticElements.js";
 
 export class ConsonantComponent extends JoyFlickComponent {
     set selectedConsonant(cons) {
+        if (this.selected != cons) {
+            this.dualRumble();
+        }
         this.selected = cons;
 
         if (cons != null) {
@@ -10,8 +13,8 @@ export class ConsonantComponent extends JoyFlickComponent {
         }
     }
 
-    constructor() {
-        super();
+    constructor(gamepad) {
+        super(gamepad);
 
         // construct and set keys
         let keys = [

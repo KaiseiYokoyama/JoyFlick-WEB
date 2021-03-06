@@ -3,6 +3,9 @@ import {Consonant, PhoneticElement, Vowel} from "../PhoneticElements.js";
 
 export class VowelComponent extends JoyFlickComponent {
     set selectedVowel(vow) {
+        if (this.selected != vow) {
+            this.dualRumble();
+        }
         this.selected = vow;
 
         if (vow != null) {
@@ -10,8 +13,8 @@ export class VowelComponent extends JoyFlickComponent {
         }
     }
 
-    constructor() {
-        super();
+    constructor(gamepad) {
+        super(gamepad);
 
         // construct and set keys
         let keys = [

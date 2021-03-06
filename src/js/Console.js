@@ -66,7 +66,7 @@ customElements.define('app-console', Console);
 
 // ゲームパッドが接続された時の挙動
 window.addEventListener('gamepadconnected', (e) => {
-    // console.log(e);
+    console.log(e);
     // JoyFlickを初期化
     Console.instance.initialize(e.gamepad);
     // if (Console.instance.joyflick == null) {

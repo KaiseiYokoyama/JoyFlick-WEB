@@ -17,14 +17,14 @@ export class JoyFlick extends HTMLElement {
     constructor(gamepad) {
         super();
 
-        this.#consonantComponent = new ConsonantComponent();
+        this.#consonantComponent = new ConsonantComponent(gamepad);
         this.appendChild(this.#consonantComponent);
 
         let separator = document.createElement('div');
         separator.classList.add('separator');
         this.appendChild(separator);
 
-        this.#vowelComponent = new VowelComponent();
+        this.#vowelComponent = new VowelComponent(gamepad);
         this.appendChild(this.#vowelComponent);
 
         this.#gamepad = gamepad;
