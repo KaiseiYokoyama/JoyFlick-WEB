@@ -1,11 +1,15 @@
-$key-font-size: 50px;
-$key-margin: $key-font-size * 0.2;
-$key-size: $key-font-size + $key-margin;
+$grid-size: 60px;
+$key-size: $grid-size * 0.8;
+$key-margin: $grid-size * 0.2;
+$selected-key-size: $grid-size * 0.9;
+$key-margin: $grid-size * 0.1;
+
 $background-clear-sky: #90caf9;
 $font-clear-sky: #039be5;
-$key-shadow: 0 $key-margin * 16 / 64 $key-margin * 24 / 64 $key-margin * 2 / 64 rgba(0, 0, 0, 0.14),
-0 $key-margin * 8 / 64 $key-margin * 30 / 64 $key-margin * 5 / 64 rgba(0, 0, 0, 0.12),
-0 $key-margin * 8 / 64 $key-margin * 10 / 64 $key-margin * -7 / 64 rgba(0, 0, 0, 0.20);
+
+$key-shadow: 0 ($key-margin * 16 / 64) ($key-margin * 24 / 64) ($key-margin * 2 / 64) rgba(0, 0, 0, 0.14),
+0 ($key-margin * 8 / 64) ($key-margin * 30 / 64) ($key-margin * 5 / 64) rgba(0, 0, 0, 0.12),
+0 ($key-margin * 8 / 64) ($key-margin * 10 / 64) ($key-margin * -7 / 64) rgba(0, 0, 0, 0.20);
 
 app-joyflick {
   display: flex;
@@ -17,28 +21,30 @@ app-joyflick {
   }
 
   > .separator {
-    width: $key-size;
+    width: $grid-size;
   }
 
   /// 子音コンポーネント
   app-consonant-component, app-vowel-component {
     display: grid;
 
-    width: $key-size * 3;
-    height: $key-size * 3;
-    grid-template-rows: repeat(3, $key-size);
-    grid-template-columns: repeat(3, $key-size);
+    width: $grid-size * 3;
+    height: $grid-size * 3;
+    grid-template-rows: repeat(3, $grid-size);
+    grid-template-columns: repeat(3, $grid-size);
 
     app-consonant-key, app-vowel-key {
-      width: $key-font-size;
-      height: $key-font-size;
-      margin: $key-margin;
+      width: $key-size;
+      height: $key-size;
+
+      align-self: center;
+      justify-self: center;
 
       text-align: center;
       vertical-align: center;
-      line-height: $key-font-size;
+      line-height: $key-size;
 
-      font-size: $key-font-size * 0.5;
+      font-size: $key-size * 0.5;
       color: #a0a0a0;
 
       border: #707070 solid 1px;
@@ -47,12 +53,16 @@ app-joyflick {
       box-shadow: $key-shadow;
 
       &[selected] {
+        width: $selected-key-size;
+        height: $selected-key-size;
+        line-height: $selected-key-size;
+
         color: white;
         background-color: $background-clear-sky;
         border-color: $font-clear-sky;
         box-shadow: none;
 
-        font-size: $key-font-size * 0.8;
+        font-size: $key-size * 0.9;
       }
     }
 

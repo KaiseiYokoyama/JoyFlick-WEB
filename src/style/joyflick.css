@@ -13,23 +13,27 @@ app-joyflick {
     grid-template-rows: repeat(3, 60px);
     grid-template-columns: repeat(3, 60px); }
     app-joyflick app-consonant-component app-consonant-key, app-joyflick app-consonant-component app-vowel-key, app-joyflick app-vowel-component app-consonant-key, app-joyflick app-vowel-component app-vowel-key {
-      width: 50px;
-      height: 50px;
-      margin: 10px;
+      width: 48px;
+      height: 48px;
+      align-self: center;
+      justify-self: center;
       text-align: center;
       vertical-align: center;
-      line-height: 50px;
-      font-size: 25px;
+      line-height: 48px;
+      font-size: 24px;
       color: #a0a0a0;
       border: #707070 solid 1px;
       border-radius: 2px;
-      box-shadow: 0 2.5px 3.75px 0.3125px rgba(0, 0, 0, 0.14), 0 1.25px 4.6875px 0.78125px rgba(0, 0, 0, 0.12), 0 1.25px 1.5625px -1.09375px rgba(0, 0, 0, 0.2); }
+      box-shadow: 0 1.5px 2.25px 0.1875px rgba(0, 0, 0, 0.14), 0 0.75px 2.8125px 0.46875px rgba(0, 0, 0, 0.12), 0 0.75px 0.9375px -0.65625px rgba(0, 0, 0, 0.2); }
       app-joyflick app-consonant-component app-consonant-key[selected], app-joyflick app-consonant-component app-vowel-key[selected], app-joyflick app-vowel-component app-consonant-key[selected], app-joyflick app-vowel-component app-vowel-key[selected] {
+        width: 54px;
+        height: 54px;
+        line-height: 54px;
         color: white;
         background-color: #90caf9;
         border-color: #039be5;
         box-shadow: none;
-        font-size: 40px; }
+        font-size: 43.2px; }
     app-joyflick app-consonant-component[value="W"] app-consonant-key[value="W"], app-joyflick app-vowel-component[value="W"] app-consonant-key[value="W"] {
       display: block; }
     app-joyflick app-consonant-component[value="W"] app-consonant-key[value="N"], app-joyflick app-vowel-component[value="W"] app-consonant-key[value="N"] {
@@ -38,7 +42,7 @@ app-joyflick {
       color: #a0a0a0;
       background-color: white;
       border-color: #707070;
-      box-shadow: 0 2.5px 3.75px 0.3125px rgba(0, 0, 0, 0.14), 0 1.25px 4.6875px 0.78125px rgba(0, 0, 0, 0.12), 0 1.25px 1.5625px -1.09375px rgba(0, 0, 0, 0.2); }
+      box-shadow: 0 1.5px 2.25px 0.1875px rgba(0, 0, 0, 0.14), 0 0.75px 2.8125px 0.46875px rgba(0, 0, 0, 0.12), 0 0.75px 0.9375px -0.65625px rgba(0, 0, 0, 0.2); }
     app-joyflick app-consonant-component[value="W"] app-consonant-key:not([selected]), app-joyflick app-vowel-component[value="W"] app-consonant-key:not([selected]) {
       color: #90caf9;
       background-color: #90caf9;
