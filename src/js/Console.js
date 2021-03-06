@@ -93,17 +93,25 @@ class TextBox extends HTMLTextAreaElement {
         super();
     }
 
+    setText(text) {
+        const [cursorStart, cursorEnd] = [this.selectionStart, this.selectionEnd];
+        this.value = text;
+        this.setSelectionRange(cursorStart, cursorEnd);
+    }
+
     connectedCallback() {
         this.focus();
     }
 
     input(char) {
-        this.value = this.value + char;
+        this.setText(this.value + char);
+        this.cursorMove(1);
     }
 
     backspace() {
         const text = this.value;
-        this.value = text.slice(0, this.selectionEnd - 1) + text.slice(this.selectionEnd);
+        this.setText(text.slice(0, this.selectionEnd - 1) + text.slice(this.selectionEnd));
+        this.cursorMove(-1);
     }
 
     transform() {
@@ -111,7 +119,7 @@ class TextBox extends HTMLTextAreaElement {
         const char = text.charAt(this.selectionEnd - 1);
         const newChar = PhoneticElement.transform(char);
         if (newChar != null) {
-            this.value = text.slice(0, this.selectionEnd - 1) + newChar + text.slice(this.selectionEnd);
+            this.setText(text.slice(0, this.selectionEnd - 1) + newChar + text.slice(this.selectionEnd));
         } else {
             // そのまま
         }
