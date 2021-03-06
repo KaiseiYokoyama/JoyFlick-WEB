@@ -1,12 +1,13 @@
 import {VowelComponent} from "./components/VowelComponent.js";
 import {ConsonantComponent} from "./components/ConsonantComponent.js";
-import {Consonant, Vowel} from "./PhoneticElements.js";
+import {Consonant, PhoneticElement, Vowel} from "./PhoneticElements.js";
 
 export class JoyFlick extends HTMLElement {
     #consonantComponent;
     #vowelComponent;
     #gamepad;
     #gamepadIndex;
+    #prevReport;
     /**
      * 普段は左スティックが母音，右スティックが子音に対応しているが，
      * それを逆転させるか否か
@@ -34,20 +35,38 @@ export class JoyFlick extends HTMLElement {
         if (gamepad.index != this.#gamepad.index) return;
 
         const report = new Report(gamepad);
-        const cons = Consonant.fromReport(report, this.reversed);
+        let outputs = [];
+
+        let cons = Consonant.fromReport(report, this.reversed);
         const vow = Vowel.fromReport(report, this.reversed);
-        // console.log([cons,vow]);
 
-        let output = null;
-        this.#vowelComponent.update(cons, vow);
         if (!this.isConsonantLocked()) {
-            output = this.#consonantComponent.update(cons, vow);
+            this.#consonantComponent.update(cons, vow);
+        } else {
+            cons = this.#consonantComponent.selected;
+        }
+        let oldVowel = this.#vowelComponent.update(cons, vow);
+
+        if (oldVowel != null) {
+            // 文字を出力
+            outputs.push(new CharOutput(PhoneticElement.character(cons, oldVowel)));
         }
 
-        if (output != null) {
-            // 文字を出力
-            console.log(output);
+        if (this.#prevReport != null) {
+            if (!this.#prevReport.transform && report.transform) {
+                // 変換を出力
+                outputs.push(new TransformOutput());
+            }
+
+            if (!this.#prevReport.backspace && report.backspace) {
+                // 削除を出力
+                outputs.push(new BackspaceOutput());
+            }
         }
+
+        // 最終処理
+        this.#prevReport = report;
+        return outputs;
     }
 
     getGamepadIndex() {
@@ -64,13 +83,13 @@ customElements.define('app-joyflick', JoyFlick);
 class Report {
     leftStick;
     rightStick;
-    convert = false;
+    transform = false;
     backspace = false;
 
     constructor(gamepad) {
         this.leftStick = new Stick(gamepad.axes[0], -gamepad.axes[1], gamepad.buttons[10].pressed);
         this.rightStick = new Stick(gamepad.axes[2], -gamepad.axes[3], gamepad.buttons[11].pressed);
-        this.convert = gamepad.buttons[6].pressed || gamepad.buttons[7].pressed;
+        this.transform = gamepad.buttons[6].pressed || gamepad.buttons[7].pressed;
         this.backspace = gamepad.buttons[0].pressed;
     }
 }
@@ -97,4 +116,26 @@ class Stick {
     radian() {
         return Math.sqrt(this.x * this.x + this.y * this.y);
     }
+}
+
+class JoyFlickOutput {
+}
+
+export class CharOutput extends JoyFlickOutput {
+    #char;
+
+    constructor(char) {
+        super();
+        this.#char = char;
+    }
+
+    getChar() {
+        return this.#char;
+    }
+}
+
+export class TransformOutput extends JoyFlickOutput {
+}
+
+export class BackspaceOutput extends JoyFlickOutput {
 }

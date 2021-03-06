@@ -32,7 +32,7 @@ export class VowelComponent extends JoyFlickComponent {
         let output = null;
 
         if (vow == null && this.selected != null) {
-            output = PhoneticElement.character(cons, this.selected);
+            output = this.selected;
         }
 
         this.selectedVowel = vow;

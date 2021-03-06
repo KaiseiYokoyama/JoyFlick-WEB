@@ -28,7 +28,11 @@ class Console extends HTMLElement {
             const gamepad = gamepads[i];
             if (gamepad == null) continue;
 
-            joyflick.update(gamepad);
+            let outputs = joyflick.update(gamepad);
+            if (outputs == null) continue;
+            outputs.forEach((output) => {
+                console.log(output);
+            });
         }
     }
 }
