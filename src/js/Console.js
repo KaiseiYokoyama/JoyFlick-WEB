@@ -1,4 +1,4 @@
-import {BackspaceOutput, CharOutput, JoyFlick, TransformOutput} from "./JoyFlick.js";
+import {BackspaceOutput, CharOutput, CursorMoveOutput, JoyFlick, TransformOutput} from "./JoyFlick.js";
 import {PhoneticElement} from "./PhoneticElements.js";
 
 class Console extends HTMLElement {
@@ -47,6 +47,10 @@ class Console extends HTMLElement {
                     }
                     case TransformOutput: {
                         Console.instance.textBox.transform();
+                        break;
+                    }
+                    case CursorMoveOutput: {
+                        Console.instance.textBox.cursorMove(output.getMove());
                         break;
                     }
                     default: {
@@ -110,6 +114,13 @@ class TextBox extends HTMLTextAreaElement {
             this.value = text.slice(0, this.selectionEnd - 1) + newChar + text.slice(this.selectionEnd);
         } else {
             // そのまま
+        }
+    }
+
+    cursorMove(diff) {
+        let to = this.selectionEnd + diff;
+        if (to >= 0) {
+            this.setSelectionRange(to, to);
         }
     }
 }

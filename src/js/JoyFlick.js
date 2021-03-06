@@ -62,6 +62,11 @@ export class JoyFlick extends HTMLElement {
                 // 削除を出力
                 outputs.push(new BackspaceOutput());
             }
+
+            if (this.#prevReport.cursorMove != report.cursorMove && report.cursorMove != 0) {
+                // カーソルを動かす
+                outputs.push(new CursorMoveOutput(report.cursorMove));
+            }
         }
 
         // 最終処理
@@ -85,12 +90,26 @@ class Report {
     rightStick;
     transform = false;
     backspace = false;
+    /**
+     * カーソルを左に1つ動かす -> -1
+     * カーソルを右に1つ動かす -> 1
+     * 動かさない -> 0
+     *
+     * @type {number}
+     */
+    cursorMove = 0;
 
     constructor(gamepad) {
         this.leftStick = new Stick(gamepad.axes[0], -gamepad.axes[1], gamepad.buttons[10].pressed);
         this.rightStick = new Stick(gamepad.axes[2], -gamepad.axes[3], gamepad.buttons[11].pressed);
         this.transform = gamepad.buttons[6].pressed || gamepad.buttons[7].pressed;
         this.backspace = gamepad.buttons[0].pressed;
+
+        if (gamepad.buttons[4].pressed) {
+            this.cursorMove = -1;
+        } else if (gamepad.buttons[5].pressed) {
+            this.cursorMove = 1;
+        }
     }
 }
 
@@ -138,4 +157,17 @@ export class TransformOutput extends JoyFlickOutput {
 }
 
 export class BackspaceOutput extends JoyFlickOutput {
+}
+
+export class CursorMoveOutput extends JoyFlickOutput {
+    #move;
+
+    constructor(move) {
+        super();
+        this.#move = move;
+    }
+
+    getMove() {
+        return this.#move;
+    }
 }
