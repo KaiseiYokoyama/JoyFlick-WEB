@@ -1,0 +1,58 @@
+app-joyflick {
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse; }
+  app-joyflick[reversed] {
+    flex-direction: row; }
+  app-joyflick > .separator {
+    width: 60px; }
+  app-joyflick app-consonant-component, app-joyflick app-vowel-component {
+    display: grid;
+    width: 180px;
+    height: 180px;
+    grid-template-rows: repeat(3, 60px);
+    grid-template-columns: repeat(3, 60px); }
+    app-joyflick app-consonant-component app-consonant-key, app-joyflick app-consonant-component app-vowel-key, app-joyflick app-vowel-component app-consonant-key, app-joyflick app-vowel-component app-vowel-key {
+      width: 50px;
+      height: 50px;
+      margin: 10px;
+      text-align: center;
+      vertical-align: center;
+      line-height: 50px;
+      font-size: 25px;
+      color: #a0a0a0;
+      border: #707070 solid 1px;
+      border-radius: 2px;
+      box-shadow: 0 2.5px 3.75px 0.3125px rgba(0, 0, 0, 0.14), 0 1.25px 4.6875px 0.78125px rgba(0, 0, 0, 0.12), 0 1.25px 1.5625px -1.09375px rgba(0, 0, 0, 0.2); }
+      app-joyflick app-consonant-component app-consonant-key[selected], app-joyflick app-consonant-component app-vowel-key[selected], app-joyflick app-vowel-component app-consonant-key[selected], app-joyflick app-vowel-component app-vowel-key[selected] {
+        color: white;
+        background-color: #90caf9;
+        border-color: #039be5;
+        box-shadow: none;
+        font-size: 40px; }
+  app-joyflick app-consonant-component app-consonant-key:nth-child(3n+1) {
+    grid-column: 1 / 2; }
+  app-joyflick app-consonant-component app-consonant-key:nth-child(3n+2) {
+    grid-column: 2 / 3; }
+  app-joyflick app-consonant-component app-consonant-key:nth-child(3n) {
+    grid-column: 3 / 4; }
+  app-joyflick app-consonant-component app-consonant-key:nth-child(1), app-joyflick app-consonant-component app-consonant-key:nth-child(2), app-joyflick app-consonant-component app-consonant-key:nth-child(3) {
+    grid-row: 1 / 2; }
+  app-joyflick app-consonant-component app-consonant-key:nth-child(4), app-joyflick app-consonant-component app-consonant-key:nth-child(5), app-joyflick app-consonant-component app-consonant-key:nth-child(6) {
+    grid-row: 2 / 3; }
+  app-joyflick app-consonant-component app-consonant-key:nth-child(7), app-joyflick app-consonant-component app-consonant-key:nth-child(8), app-joyflick app-consonant-component app-consonant-key:nth-child(9) {
+    grid-row: 3 / 4; }
+  app-joyflick app-vowel-component app-vowel-key:nth-child(2) {
+    grid-column: 1 / 2; }
+  app-joyflick app-vowel-component app-vowel-key:nth-child(1), app-joyflick app-vowel-component app-vowel-key:nth-child(3), app-joyflick app-vowel-component app-vowel-key:nth-child(5) {
+    grid-column: 2 / 3; }
+  app-joyflick app-vowel-component app-vowel-key:nth-child(4) {
+    grid-column: 3 / 4; }
+  app-joyflick app-vowel-component app-vowel-key:nth-child(1) {
+    grid-row: 1 / 2; }
+  app-joyflick app-vowel-component app-vowel-key:nth-child(2), app-joyflick app-vowel-component app-vowel-key:nth-child(3), app-joyflick app-vowel-component app-vowel-key:nth-child(4) {
+    grid-row: 2 / 3; }
+  app-joyflick app-vowel-component app-vowel-key:nth-child(5) {
+    grid-row: 3 / 4; }
+
+/*# sourceMappingURL=joyflick.css.map */
