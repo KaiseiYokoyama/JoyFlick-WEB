@@ -30,17 +30,35 @@ app-joyflick {
         border-color: #039be5;
         box-shadow: none;
         font-size: 40px; }
-  app-joyflick app-consonant-component app-consonant-key:nth-child(3n+1) {
-    grid-column: 1 / 2; }
-  app-joyflick app-consonant-component app-consonant-key:nth-child(3n+2) {
-    grid-column: 2 / 3; }
-  app-joyflick app-consonant-component app-consonant-key:nth-child(3n) {
-    grid-column: 3 / 4; }
-  app-joyflick app-consonant-component app-consonant-key:nth-child(1), app-joyflick app-consonant-component app-consonant-key:nth-child(2), app-joyflick app-consonant-component app-consonant-key:nth-child(3) {
-    grid-row: 1 / 2; }
-  app-joyflick app-consonant-component app-consonant-key:nth-child(4), app-joyflick app-consonant-component app-consonant-key:nth-child(5), app-joyflick app-consonant-component app-consonant-key:nth-child(6) {
+    app-joyflick app-consonant-component[value="W"] app-consonant-key[value="W"], app-joyflick app-vowel-component[value="W"] app-consonant-key[value="W"] {
+      display: block; }
+    app-joyflick app-consonant-component[value="W"] app-consonant-key[value="N"], app-joyflick app-vowel-component[value="W"] app-consonant-key[value="N"] {
+      display: none; }
+    app-joyflick app-consonant-component[value="W"] app-consonant-key[selected], app-joyflick app-vowel-component[value="W"] app-consonant-key[selected] {
+      color: #a0a0a0;
+      background-color: white;
+      border-color: #707070;
+      box-shadow: 0 2.5px 3.75px 0.3125px rgba(0, 0, 0, 0.14), 0 1.25px 4.6875px 0.78125px rgba(0, 0, 0, 0.12), 0 1.25px 1.5625px -1.09375px rgba(0, 0, 0, 0.2); }
+    app-joyflick app-consonant-component[value="W"] app-consonant-key:not([selected]), app-joyflick app-vowel-component[value="W"] app-consonant-key:not([selected]) {
+      color: #90caf9;
+      background-color: #90caf9;
+      border-color: #039be5;
+      box-shadow: none; }
+  app-joyflick app-consonant-component app-consonant-key[value="W"] {
+    display: none;
+    grid-column: 2 / 3;
     grid-row: 2 / 3; }
-  app-joyflick app-consonant-component app-consonant-key:nth-child(7), app-joyflick app-consonant-component app-consonant-key:nth-child(8), app-joyflick app-consonant-component app-consonant-key:nth-child(9) {
+  app-joyflick app-consonant-component app-consonant-key[value="A"], app-joyflick app-consonant-component app-consonant-key[value="T"], app-joyflick app-consonant-component app-consonant-key[value="M"] {
+    grid-column: 1 / 2; }
+  app-joyflick app-consonant-component app-consonant-key[value="K"], app-joyflick app-consonant-component app-consonant-key[value="N"], app-joyflick app-consonant-component app-consonant-key[value="Y"], app-joyflick app-consonant-component app-consonant-key[value="W"] {
+    grid-column: 2 / 3; }
+  app-joyflick app-consonant-component app-consonant-key[value="S"], app-joyflick app-consonant-component app-consonant-key[value="H"], app-joyflick app-consonant-component app-consonant-key[value="R"] {
+    grid-column: 3 / 4; }
+  app-joyflick app-consonant-component app-consonant-key[value="A"], app-joyflick app-consonant-component app-consonant-key[value="K"], app-joyflick app-consonant-component app-consonant-key[value="S"] {
+    grid-row: 1 / 2; }
+  app-joyflick app-consonant-component app-consonant-key[value="T"], app-joyflick app-consonant-component app-consonant-key[value="N"], app-joyflick app-consonant-component app-consonant-key[value="H"], app-joyflick app-consonant-component app-consonant-key[value="W"] {
+    grid-row: 2 / 3; }
+  app-joyflick app-consonant-component app-consonant-key[value="M"], app-joyflick app-consonant-component app-consonant-key[value="Y"], app-joyflick app-consonant-component app-consonant-key[value="R"] {
     grid-row: 3 / 4; }
   app-joyflick app-vowel-component app-vowel-key:nth-child(2) {
     grid-column: 1 / 2; }

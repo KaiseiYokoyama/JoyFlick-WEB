@@ -17,6 +17,7 @@ export class Key extends HTMLElement {
         super();
 
         this.value = value;
+        this.setAttribute('value',value.getValue());
     }
 
     update(selected) {

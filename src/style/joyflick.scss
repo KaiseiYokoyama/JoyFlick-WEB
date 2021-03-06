@@ -3,6 +3,9 @@ $key-margin: $key-font-size * 0.2;
 $key-size: $key-font-size + $key-margin;
 $background-clear-sky: #90caf9;
 $font-clear-sky: #039be5;
+$key-shadow: 0 $key-margin * 16 / 64 $key-margin * 24 / 64 $key-margin * 2 / 64 rgba(0, 0, 0, 0.14),
+0 $key-margin * 8 / 64 $key-margin * 30 / 64 $key-margin * 5 / 64 rgba(0, 0, 0, 0.12),
+0 $key-margin * 8 / 64 $key-margin * 10 / 64 $key-margin * -7 / 64 rgba(0, 0, 0, 0.20);
 
 app-joyflick {
   display: flex;
@@ -41,10 +44,7 @@ app-joyflick {
       border: #707070 solid 1px;
       border-radius: 2px;
 
-      //box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.20);
-      box-shadow: 0 $key-margin * 16 / 64 $key-margin * 24 / 64 $key-margin * 2 / 64 rgba(0, 0, 0, 0.14),
-                  0 $key-margin * 8 / 64 $key-margin * 30 / 64 $key-margin * 5 / 64 rgba(0, 0, 0, 0.12),
-                  0 $key-margin * 8 / 64 $key-margin * 10 / 64 $key-margin * -7 / 64 rgba(0, 0, 0, 0.20);
+      box-shadow: $key-shadow;
 
       &[selected] {
         color: white;
@@ -55,30 +55,61 @@ app-joyflick {
         font-size: $key-font-size * 0.8;
       }
     }
+
+    &[value="W"] app-consonant-key {
+      &[value="W"] {
+        display: block;
+      }
+
+      &[value="N"] {
+        display: none;
+      }
+
+      &[selected] {
+        color: #a0a0a0;
+        background-color: white;
+        border-color: #707070;
+        box-shadow: $key-shadow;
+      }
+
+      &:not([selected]) {
+        /// 背景色と文字色を同じにして，表示された文字を消す
+        color: $background-clear-sky;
+        background-color: $background-clear-sky;
+        border-color: $font-clear-sky;
+        box-shadow: none;
+      }
+    }
   }
 
   app-consonant-component app-consonant-key {
-    &:nth-child(3n+1) {
-      grid-column: 1 / 2;
-    }
-
-    &:nth-child(3n+2) {
+    &[value="W"] {
+      display: none;
       grid-column: 2 / 3;
-    }
-
-    &:nth-child(3n) {
-      grid-column: 3 / 4;
-    }
-
-    &:nth-child(1), &:nth-child(2), &:nth-child(3) {
-      grid-row: 1 / 2;
-    }
-
-    &:nth-child(4), &:nth-child(5), &:nth-child(6) {
       grid-row: 2 / 3;
     }
 
-    &:nth-child(7), &:nth-child(8), &:nth-child(9) {
+    &[value="A"], &[value="T"], &[value="M"] {
+      grid-column: 1 / 2;
+    }
+
+    &[value="K"], &[value="N"], &[value="Y"], &[value="W"] {
+      grid-column: 2 / 3;
+    }
+
+    &[value="S"], &[value="H"], &[value="R"] {
+      grid-column: 3 / 4;
+    }
+
+    &[value="A"], &[value="K"], &[value="S"] {
+      grid-row: 1 / 2;
+    }
+
+    &[value="T"], &[value="N"], &[value="H"], &[value="W"] {
+      grid-row: 2 / 3;
+    }
+
+    &[value="M"], &[value="Y"], &[value="R"] {
       grid-row: 3 / 4;
     }
   }
@@ -100,7 +131,7 @@ app-joyflick {
       grid-row: 1 / 2;
     }
 
-    &:nth-child(2),&:nth-child(3),&:nth-child(4) {
+    &:nth-child(2), &:nth-child(3), &:nth-child(4) {
       grid-row: 2 / 3;
     }
 

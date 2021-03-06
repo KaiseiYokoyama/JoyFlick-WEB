@@ -24,7 +24,7 @@ export class ConsonantComponent extends JoyFlickComponent {
             new ConsonantKey(Consonant.M),
             new ConsonantKey(Consonant.Y),
             new ConsonantKey(Consonant.R),
-            // new ConsonantKey(Consonant.W)
+            new ConsonantKey(Consonant.W),
         ];
 
         keys.forEach((key) => {
