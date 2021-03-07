@@ -11,3 +11,15 @@
 
 [gamepadapi]: https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API
 [blazeui]: https://www.blazeui.com/
+
+## TODO
+- [ ] 予測変換の実装
+   - https://www.google.co.jp/ime/cgiapi.html
+- [ ] デザインの改善
+   - 操作説明
+   - ナビゲーションポップアップ
+   - テキストエリアの見た目の改善
+- [ ] 通知の実装
+   - コントローラの接続・更新・切断
+- [ ] バグ修正
+   - 最後の文字を削除した時にカーソルが一つ手前に動く
