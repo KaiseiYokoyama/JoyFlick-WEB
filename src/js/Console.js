@@ -110,8 +110,14 @@ class TextBox extends HTMLTextAreaElement {
 
     backspace() {
         const text = this.value;
+        const lastCharBackspaced = text.length === this.selectionEnd;
         this.setText(text.slice(0, this.selectionEnd - 1) + text.slice(this.selectionEnd));
-        this.cursorMove(-1);
+
+        // 最後の文字を消した場合，勝手にカーソルが必要な分だけ下がるので
+        // 手動でカーソルを下げる必要はない
+        if (!lastCharBackspaced) {
+            this.cursorMove(-1);
+        }
     }
 
     transform() {
@@ -121,7 +127,7 @@ class TextBox extends HTMLTextAreaElement {
         if (newChar != null) {
             this.setText(text.slice(0, this.selectionEnd - 1) + newChar + text.slice(this.selectionEnd));
         } else {
-            // そのまま
+            // 変換しない（変換先がないので）
         }
     }
 
