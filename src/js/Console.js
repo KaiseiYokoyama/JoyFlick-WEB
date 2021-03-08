@@ -91,6 +91,9 @@ setInterval(Console.scanGamepads, 60);
 class TextBox extends HTMLInputElement {
     constructor() {
         super();
+
+        // style
+        this.classList.add("c-field");
     }
 
     setText(text) {

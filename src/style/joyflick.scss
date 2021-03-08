@@ -11,6 +11,20 @@ $key-shadow: 0 ($key-margin * 16 / 64) ($key-margin * 24 / 64) ($key-margin * 2 
 0 ($key-margin * 8 / 64) ($key-margin * 30 / 64) ($key-margin * 5 / 64) rgba(0, 0, 0, 0.12),
 0 ($key-margin * 8 / 64) ($key-margin * 10 / 64) ($key-margin * -7 / 64) rgba(0, 0, 0, 0.20);
 
+app-console {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  > input.c-field {
+    width: $grid-size * 7;
+    margin: 20px;
+  }
+}
+
 app-joyflick {
   display: flex;
   justify-content: center;
