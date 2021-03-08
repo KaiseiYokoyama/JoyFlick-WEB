@@ -88,7 +88,7 @@ window.addEventListener('gamepaddisconnected', (e) => {
 
 setInterval(Console.scanGamepads, 60);
 
-class TextBox extends HTMLTextAreaElement {
+class TextBox extends HTMLInputElement {
     constructor() {
         super();
     }
@@ -139,4 +139,4 @@ class TextBox extends HTMLTextAreaElement {
     }
 }
 
-customElements.define('app-textbox', TextBox, {extends: 'textarea'})
+customElements.define('app-input', TextBox, {extends: 'input'})
