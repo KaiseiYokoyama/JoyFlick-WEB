@@ -15,11 +15,11 @@ class Console extends HTMLElement {
     initialize(gamepad) {
         this.innerHTML = '';
 
-        this.joyflick = new JoyFlick(gamepad);
-        this.appendChild(this.joyflick);
-
         this.textBox = new TextBox();
         this.appendChild(this.textBox);
+
+        this.joyflick = new JoyFlick(gamepad);
+        this.appendChild(this.joyflick);
     }
 
     static scanGamepads() {
