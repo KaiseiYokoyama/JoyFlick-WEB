@@ -107,7 +107,10 @@ class TextBox extends HTMLInputElement {
     }
 
     input(char) {
-        this.setText(this.value + char);
+        const text = this.value;
+        const newText = text.slice(0, this.selectionEnd) + char + text.slice(this.selectionEnd);
+        this.setText(newText);
+
         this.cursorMove(1);
     }
 
