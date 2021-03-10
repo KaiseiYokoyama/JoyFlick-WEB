@@ -1,96 +1,40 @@
 import {BackspaceOutput, CharOutput, CursorMoveOutput, JoyFlick, TransformOutput} from "./JoyFlick.js";
 import {PhoneticElement} from "./PhoneticElements.js";
 
-class Console extends HTMLElement {
-    static instance;
+export class Console extends HTMLElement {
     joyflick = null;
     textBox = null;
+    #initialized = false;
 
     constructor() {
         super();
-
-        Console.instance = this;
     }
 
     initialize(gamepad) {
         this.innerHTML = '';
 
+        this.textBox = new TextBox();
+        this.appendChild(this.textBox);
+
         this.joyflick = new JoyFlick(gamepad);
         this.appendChild(this.joyflick);
 
-        this.textBox = new TextBox();
-        this.appendChild(this.textBox);
+        this.#initialized = true;
     }
 
-    static scanGamepads() {
-        const joyflick = Console.instance.joyflick;
-        if (joyflick == null) return;
-
-        const gamepads = navigator.getGamepads();
-        if (gamepads == null) return;
-
-        for (let i = 0; i < gamepads.length; i++) {
-            const gamepad = gamepads[i];
-            if (gamepad == null) continue;
-
-            let outputs = joyflick.update(gamepad);
-            if (outputs == null) continue;
-            outputs.forEach((output) => {
-                switch (output.constructor) {
-                    case CharOutput: {
-                        Console.instance.textBox.input(output.getChar());
-                        break;
-                    }
-                    case BackspaceOutput: {
-                        Console.instance.textBox.backspace();
-                        break;
-                    }
-                    case TransformOutput: {
-                        Console.instance.textBox.transform();
-                        break;
-                    }
-                    case CursorMoveOutput: {
-                        Console.instance.textBox.cursorMove(output.getMove());
-                        break;
-                    }
-                    default: {
-                        console.log(output);
-                    }
-                }
-            });
-        }
+    isInitialized() {
+        return this.#initialized;
     }
 }
 
 customElements.define('app-console', Console);
 
-// ゲームパッドが接続された時の挙動
-window.addEventListener('gamepadconnected', (e) => {
-    console.log(e);
-    // JoyFlickを初期化
-    Console.instance.initialize(e.gamepad);
-    // if (Console.instance.joyflick == null) {
-    // } else {
-    // 無視
-    // }
-});
-
-// ゲームパッドが接続解除された時の挙動
-window.addEventListener('gamepaddisconnected', (e) => {
-    if (Console.instance != null) {
-        if (e.gamepad.index == Console.instance.getGamepadIndex()) {
-            // todo JoyFlickを無効化
-        }
-    } else {
-        // 無視
-    }
-});
-
-setInterval(Console.scanGamepads, 60);
-
-class TextBox extends HTMLTextAreaElement {
+class TextBox extends HTMLInputElement {
     constructor() {
         super();
+
+        // style
+        this.classList.add("c-field");
     }
 
     setText(text) {
@@ -104,14 +48,23 @@ class TextBox extends HTMLTextAreaElement {
     }
 
     input(char) {
-        this.setText(this.value + char);
+        const text = this.value;
+        const newText = text.slice(0, this.selectionEnd) + char + text.slice(this.selectionEnd);
+        this.setText(newText);
+
         this.cursorMove(1);
     }
 
     backspace() {
         const text = this.value;
+        const lastCharBackspaced = text.length === this.selectionEnd;
         this.setText(text.slice(0, this.selectionEnd - 1) + text.slice(this.selectionEnd));
-        this.cursorMove(-1);
+
+        // 最後の文字を消した場合，勝手にカーソルが必要な分だけ下がるので
+        // 手動でカーソルを下げる必要はない
+        if (!lastCharBackspaced) {
+            this.cursorMove(-1);
+        }
     }
 
     transform() {
@@ -121,7 +74,7 @@ class TextBox extends HTMLTextAreaElement {
         if (newChar != null) {
             this.setText(text.slice(0, this.selectionEnd - 1) + newChar + text.slice(this.selectionEnd));
         } else {
-            // そのまま
+            // 変換しない（変換先がないので）
         }
     }
 
@@ -133,4 +86,4 @@ class TextBox extends HTMLTextAreaElement {
     }
 }
 
-customElements.define('app-textbox', TextBox, {extends: 'textarea'})
+customElements.define('app-input', TextBox, {extends: 'input'})

@@ -14,6 +14,9 @@ export class JoyFlickComponent extends HTMLElement {
 
     dualRumble() {
         if (this.gamepad.vibrationActuator !== undefined) {
+            // rumble非対応のコントローラ
+            if (this.gamepad.vibrationActuator == null) return;
+
             const promise = this.gamepad.vibrationActuator.playEffect("dual-rumble", {
                 duration: 50,
                 strongMagnitude: 1.0,

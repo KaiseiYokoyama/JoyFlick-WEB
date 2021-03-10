@@ -47,6 +47,9 @@ export class PhoneticElement {
     }
 
     static transform(char) {
+        if (char == "づ") return "っ";
+        else if (char == "っ") return "つ";
+
         let cons = null, vow = null;
         outer: for (let i = 0; i < PhoneticElement.TABLE.length; i++) {
             for (let j = 0; j < PhoneticElement.TABLE[0].length; j++) {
