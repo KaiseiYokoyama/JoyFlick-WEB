@@ -26,6 +26,8 @@ app-console {
 }
 
 app-joyflick {
+  flex-grow: 1;
+
   display: flex;
   justify-content: center;
   flex-direction: row-reverse;
@@ -164,4 +166,37 @@ app-joyflick {
     }
   }
 
+}
+
+blaze-alerts > div[role="presentation"] {
+  flex-grow: 1;
+  width: auto;
+
+  blaze-alert {
+    &[outdated] {
+      animation: alertOutdated 250ms forwards;
+    }
+
+    > div[role="alert"] {
+      > *:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      > .title {
+        font-size: 140%;
+        font-weight: 300;
+      }
+
+      > .rumble {
+        &::after {
+          font-weight: 400;
+          content: '非対応';
+        }
+
+        &[rumble]::after {
+          content: '対応';
+        }
+      }
+    }
+  }
 }

@@ -5,7 +5,7 @@ import {BackspaceOutput, CharOutput, CursorMoveOutput, TransformOutput} from "./
 export class Application {
     static instance = new Application();
     console = document.querySelector('app-console');
-    notifications = document.querySelector('blaze-alerts');
+    notifications = document.querySelector('blaze-alerts > div[role]');
 
     static scanGamepads() {
         const joyflick = Application.instance.console.joyflick;
@@ -18,7 +18,6 @@ export class Application {
             const gamepad = gamepads[i];
             if (gamepad == null) continue;
 
-            console.log(gamepad);
             let outputs = joyflick.update(gamepad);
             if (outputs == null) continue;
             outputs.forEach((output) => {
@@ -52,9 +51,41 @@ export class Application {
      * @param gamepad
      */
     static newGamepad(gamepad) {
-        const title = "Gamepad Connected";
-        const subTitle = gamepad.id;
+        const title = "ゲームパッドが接続されました";
+        const titleElem = document.createElement('div');
+        titleElem.classList.add('title');
+        titleElem.innerText = title;
+
+        const gamepadID = gamepad.id;
+        const gamepadIDElem = document.createElement('div');
+        gamepadIDElem.classList.add('gamepad-id');
+        gamepadIDElem.innerText = gamepadID;
+
         const rumbleAvailable = gamepad.vibrationActuator != null;
+        const rumbleElem = document.createElement('div');
+        rumbleElem.classList.add('rumble');
+        if (rumbleAvailable === true) {
+            rumbleElem.toggleAttribute('rumble');
+        }
+        rumbleElem.innerText = "振動機能："
+
+        const notification = document.createElement('blaze-alert');
+        notification.toggleAttribute('open');
+        notification.toggleAttribute('dismissible');
+        // 背景:青色
+        notification.setAttribute('type','info');
+
+        // 子要素を追加
+        notification.appendChild(titleElem);
+        notification.appendChild(gamepadIDElem);
+        notification.appendChild(rumbleElem);
+
+        Application.instance.notifications.appendChild(notification);
+
+        // 一定時間後に消える
+        // setTimeout( () => {
+        //     notification.close();
+        // }, 5000)
     }
 }
 
@@ -62,6 +93,8 @@ window.addEventListener('gamepadconnected', (e) => {
     console.log(e);
     // JoyFlickを初期化
     Application.instance.console.initialize(e.gamepad);
+    // 通知を出す
+    Application.newGamepad(e.gamepad);
     // if (Console.instance.joyflick == null) {
     // } else {
     // 無視

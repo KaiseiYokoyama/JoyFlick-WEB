@@ -1,3 +1,4 @@
+@charset "UTF-8";
 app-console {
   width: 100%;
   display: flex;
@@ -9,6 +10,7 @@ app-console {
     margin: 20px; }
 
 app-joyflick {
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   flex-direction: row-reverse; }
@@ -86,5 +88,21 @@ app-joyflick {
     grid-row: 2 / 3; }
   app-joyflick app-vowel-component app-vowel-key:nth-child(5) {
     grid-row: 3 / 4; }
+
+blaze-alerts > div[role="presentation"] {
+  flex-grow: 1;
+  width: auto; }
+  blaze-alerts > div[role="presentation"] blaze-alert[outdated] {
+    animation: alertOutdated 250ms forwards; }
+  blaze-alerts > div[role="presentation"] blaze-alert > div[role="alert"] > *:not(:last-child) {
+    margin-bottom: 10px; }
+  blaze-alerts > div[role="presentation"] blaze-alert > div[role="alert"] > .title {
+    font-size: 140%;
+    font-weight: 300; }
+  blaze-alerts > div[role="presentation"] blaze-alert > div[role="alert"] > .rumble::after {
+    font-weight: 400;
+    content: '非対応'; }
+  blaze-alerts > div[role="presentation"] blaze-alert > div[role="alert"] > .rumble[rumble]::after {
+    content: '対応'; }
 
 /*# sourceMappingURL=joyflick.css.map */
