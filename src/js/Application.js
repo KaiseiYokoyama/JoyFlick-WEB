@@ -108,9 +108,36 @@ window.addEventListener('gamepadconnected', (e) => {
 
 // ゲームパッドが接続解除された時の挙動
 window.addEventListener('gamepaddisconnected', (e) => {
-    if (Console.instance != null) {
-        if (e.gamepad.index == Application.instance.console.getGamepadIndex()) {
-            // todo JoyFlickを無効化
+    console.log(e);
+    if (Application.instance.console.isInitialized()) {
+        if (e.gamepad.index == Application.instance.console.joyflick.getGamepadIndex()) {
+            Application.newNotification(
+                "ゲームパッドが接続解除されました",
+                e.gamepad.id,
+                null,
+                'warning'
+            );
+            // 他に使えるコントローラがあれば使う
+            const gamepads = navigator.getGamepads();
+
+            if (gamepads!=null) {
+                for (let i = 0; i < gamepads.length; i++) {
+                    const gamepad = gamepads[i];
+                    if (gamepad == null || !gamepad.connected) continue;
+
+                    Application.instance.console.initialize(gamepad);
+                    Application.newGamepad(gamepad);
+                    return;
+                }
+            }
+
+            // 使えるゲームパッドがない場合
+            Application.newNotification(
+                "ゲームパッドが接続されていません",
+                "ゲームパッドを接続してください",
+                null,
+                "error"
+            );
         }
     } else {
         // 無視

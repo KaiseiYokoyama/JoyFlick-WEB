@@ -4,6 +4,7 @@ import {PhoneticElement} from "./PhoneticElements.js";
 export class Console extends HTMLElement {
     joyflick = null;
     textBox = null;
+    #initialized = false;
 
     constructor() {
         super();
@@ -17,6 +18,12 @@ export class Console extends HTMLElement {
 
         this.joyflick = new JoyFlick(gamepad);
         this.appendChild(this.joyflick);
+
+        this.#initialized = true;
+    }
+
+    isInitialized() {
+        return this.#initialized;
     }
 }
 
