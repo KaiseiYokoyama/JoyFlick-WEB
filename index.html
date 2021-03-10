@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>JoyFlick WEB</title>
-    <script src="src/js/Console.js" type="module"></script>
+    <script type="module" src="https://unpkg.com/@blaze/atoms@x.x.x/dist/blaze-atoms/blaze-atoms.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/@blaze/atoms@x.x.x/dist/blaze-atoms/blaze-atoms.js"></script>
+    <script src="src/js/Application.js" type="module"></script>
     <link rel="stylesheet" href="https://unpkg.com/@blaze/css@9.2.0/dist/blaze/blaze.css">
     <link rel="stylesheet" href="src/style/joyflick.css">
 <!--    <script src="src/js/main.js"></script>-->
@@ -11,6 +13,13 @@
 <body>
     <main>
         <app-console></app-console>
+        <blaze-alerts position="topright">
+            <blaze-alert open dismissible type="brand">This is a toast</blaze-alert>
+            <blaze-alert open dismissible type="info">Just for your information</blaze-alert>
+            <blaze-alert open type="warning">You can't get rid of this warning</blaze-alert>
+            <blaze-alert open dismissible type="success">Yay things worked</blaze-alert>
+            <blaze-alert open dismissible type="error">Argh there is an error</blaze-alert>
+        </blaze-alerts>
     </main>
 </body>
 </html>
