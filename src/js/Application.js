@@ -5,7 +5,7 @@ import {BackspaceOutput, CharOutput, CursorMoveOutput, TransformOutput} from "./
 export class Application {
     static instance = new Application();
     console = document.querySelector('app-console');
-    notifications = document.querySelector('blaze-alerts > div[role]');
+    static #notificationsQuerySelector = 'blaze-alerts > div[role]';
 
     static scanGamepads() {
         const joyflick = Application.instance.console.joyflick;
@@ -52,14 +52,7 @@ export class Application {
      */
     static newGamepad(gamepad) {
         const title = "ゲームパッドが接続されました";
-        const titleElem = document.createElement('div');
-        titleElem.classList.add('title');
-        titleElem.innerText = title;
-
         const gamepadID = gamepad.id;
-        const gamepadIDElem = document.createElement('div');
-        gamepadIDElem.classList.add('gamepad-id');
-        gamepadIDElem.innerText = gamepadID;
 
         const rumbleAvailable = gamepad.vibrationActuator != null;
         const rumbleElem = document.createElement('div');
@@ -69,23 +62,35 @@ export class Application {
         }
         rumbleElem.innerText = "振動機能："
 
-        const notification = document.createElement('blaze-alert');
-        notification.toggleAttribute('open');
-        notification.toggleAttribute('dismissible');
-        // 背景:青色
-        notification.setAttribute('type','info');
-
-        // 子要素を追加
-        notification.appendChild(titleElem);
-        notification.appendChild(gamepadIDElem);
-        notification.appendChild(rumbleElem);
-
-        Application.instance.notifications.appendChild(notification);
+        Application.newNotification(title, gamepadID, rumbleElem);
 
         // 一定時間後に消える
         // setTimeout( () => {
         //     notification.close();
         // }, 5000)
+    }
+
+    static newNotification(title, subTitle, content, type = 'info') {
+        const titleElem = document.createElement('div');
+        titleElem.classList.add('title');
+        titleElem.innerText = title;
+
+        const subTitleElem = document.createElement('div');
+        subTitleElem.classList.add('gamepad-id');
+        subTitleElem.innerText = subTitle;
+
+        const notification = document.createElement('blaze-alert');
+        notification.toggleAttribute('open');
+        notification.toggleAttribute('dismissible');
+        notification.setAttribute('type', type);
+
+        // 子要素を追加
+        notification.appendChild(titleElem);
+        notification.appendChild(subTitleElem);
+        if (content) notification.appendChild(content);
+
+        document.querySelector(Application.#notificationsQuerySelector)
+            .appendChild(notification);
     }
 }
 
